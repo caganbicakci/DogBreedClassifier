@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:ImageClassifierApp"
+             x:Class="ImageClassifierApp.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:MainViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BtnStyle" TargetType="Button">
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="WidthRequest" Value="120" />
+                <Setter Property="BackgroundColor" Value="LimeGreen" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+
+            <Style x:Key="LblStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+        <AbsoluteLayout>
+
+            <Image
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                Aspect="AspectFill"
+                Source="background.png" 
+                Opacity="0.95"/>
+
+            <Grid 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame BorderColor="LightGray" Padding="0" BackgroundColor="Transparent" Grid.Row="0" Margin="1">
+                    <Image x:Name="Image" WidthRequest="450" Aspect="AspectFill" HorizontalOptions="CenterAndExpand" Source="{Binding Image}" BackgroundColor="Transparent"/>
+                </Frame>
+
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="1" Margin="0,5,0,0">
+                    <Button x:Name="TakePhotoBtn" Text="Take a photo" Style="{StaticResource BtnStyle}" Command="{Binding TakePhotoCommand}"/>
+                    <Button x:Name="PickPhotoBtn" Text="Pick a photo" Style="{StaticResource BtnStyle}" Command="{Binding PickPhotoCommand}"/>
+                    <Button x:Name="ClassifyBtn" Text="Classify"  Style="{StaticResource BtnStyle}" Command="{Binding ClassifyCommand}" />
+                </StackLayout>
+
+                <Frame Padding="0" HeightRequest="200" BorderColor="LightGray" CornerRadius="20" BackgroundColor="Transparent" Grid.Row="2" Margin="1" >
+
+                    <AbsoluteLayout>
+
+                        <Label Text="Classification Result" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,5,0,0" FontSize="18" TextColor="White" 
+                               AbsoluteLayout.LayoutBounds="0.5,0" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                        
+                        <ScrollView AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional">
+                            <StackLayout Spacing="0">
+
+                                <Label Text="{Binding ImageProbability}" Style="{StaticResource LblStyle}"/>
+                                <Label Text="{Binding ImageTag}" Style="{StaticResource LblStyle}" VerticalOptions="Center"/>
+                                
+                            </StackLayout>
+                        </ScrollView>
+                        
+                    </AbsoluteLayout>
+
+                </Frame>
+
+            </Grid>
+
+
+    </AbsoluteLayout>
+
+</ContentPage>
